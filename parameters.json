@@ -1,0 +1,36 @@
+{% set ntpchecksrv = pillar['ntp']['servers'][0]|replace(" true", "") %}
+
+
+{
+  "services":{
+    "system": {
+      "check_mem": {"command": "check_mem","description": "Memory Usage","parameters": "!95!98!95!98","dependency": "Check NRPE","graphite": 1},
+      "check_disk": {"command": "check_disk","description": "Filesystem Usage","parameters": "!95!98!95!98!","dependency": "Check NRPE","graphite": 1},
+      "check_cpu": {"command": "check_cpu","description": "CPU Usage","parameters": "!95!98!100!100!70!80!2!4","dependency": "Check NRPE","graphite": 1},
+      "check_tcp": {"command": "check_tcp","description": "Check NRPE","parameters": "!5666","dependency": "None","graphite": 1},
+      "check_iftraffic": {"command": "check_iftraffic","description": "Network Traffic","parameters": "","dependency": "Check NRPE","graphite": 1},
+      "check_ntp_time": {"command": "check_ntp_time","description": "Check NTP DRIFT","parameters": "!{{ntpchecksrv}}!5!5","dependency": "None"}
+  },
+    "mysql55": {
+      "check-mysql-innodb": {"command": "check-mysql-innodb", "description": "INNODB engine status", "parameters": "", "dependency": "MySQL running"},
+      "check-mysql-pidfile": {"command": "check-mysql-pidfile", "description": "MySQL running", "parameters": "", "dependency": "Check NRPE"},
+      "check-mysql-processlist": {"command": "check-mysql-processlist", "description": "Check MySQL processes", "parameters": "", "dependency": "MySQL running"},
+      "check-mysql-replication-delay": {"command": "check-mysql-replication-delay", "description": "Slave Replication Delay", "parameters": "", "dependency": "MySQL running"},
+      "check-mysql-replication-running": {"command": "check-mysql-replication-running", "description": "Slave Replication", "parameters": "", "dependency": "MySQL running"},
+      "check_mysql": {"command": "check_mysql", "description": "MySQL Performance Counters", "parameters": "", "dependency": "MySQL running"},
+      "check-mysql-status": {"command": "check-mysql-status", "description": "Check MySQL threads", "parameters": "", "dependency": "MySQL running"}
+    }
+  },
+  "monitors":{
+    "bmit":{"url":"https://monitor.xc.inet/config/upload.php","token":"aI87QSI6J0"},
+    "mt":{"url":"https://monitor.xc.inet/config/upload.php","token":"aI87QSI6J0"},
+    "pl":{"url":"https://monitor.xc.inet/config/upload.php","token":"aI87QSI6J0"},
+    "aws":{"url":"https://monitor.xc.inet/config/upload.php","token":"aI87QSI6J0"}
+  },
+  "templates":{
+    "prd":{"host":"default-host","service":"default-service"},
+    "stg":{"host":"default-host","service":"default-service"},
+    "qa":{"host":"default-host","service":"default-service"},
+    "dev":{"host":"default-host","service":"default-service"}
+  }
+}

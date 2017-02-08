@@ -1,0 +1,10 @@
+# service dependencies for '{{ dependency_hostname }}'
+define servicedependency {
+        host_name {{ dependency_hostname }}
+        service_description {{ dependency_name }}
+        dependent_host_name {{ dependency_hostname }}
+        dependent_service_description {{ dependency_services }}
+        execution_failure_criteria n
+        notification_failure_criteria w,c
+}
+

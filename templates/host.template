@@ -1,0 +1,16 @@
+define host {
+    use                     {{ template_use }}
+    host_name               {{ template_hostname }}
+    alias                   {{ template_hostname }}
+    address                 {{ template_ip }}
+
+    _PROJECT                {{ template_project }}
+    _APP                    {{ template_app }}
+    _ENVIRONMENT            {{ template_environment }}
+    _INCKEY                 {{ template_inckey }}
+    _GRAPHITEPREFIX         on
+
+}
+
+
+

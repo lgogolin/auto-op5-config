@@ -1,0 +1,20 @@
+define service {
+    use                     {{ template_use }}
+    host_name               {{ template_hostname }}
+    service_description     {{ template_description }}
+    check_command           {{ template_command }}
+    notifications_enabled   {{ template_notification }}
+    {% if "Check NRPE" in template_description %}
+    check_interval          60
+    retry_interval          10
+    {% endif %}
+
+    _PROJECT                {{ template_project }}
+    _APP                    {{ template_app }}
+    _ENVIRONMENT            {{ template_environment }}
+    _INCKEY                 {{ template_inckey }}
+    {% if template_graphite == 1 %}
+    _GRAPHITEPREFIX         on
+    {% endif %}
+}
+
